@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RunnyBunny Preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 18px;
+        background: radial-gradient(circle at 50% -15%, rgba(168, 230, 207, 0.36), transparent 34%), #f5f1e8;
+        color: #222;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .phone {
+        width: min(100%, 430px);
+        min-height: 680px;
+        height: min(920px, calc(100vh - 36px));
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(34, 34, 34, 0.08);
+        border-radius: 30px;
+        background: #fffdf7;
+        box-shadow: 0 18px 48px rgba(66, 62, 48, 0.11);
+      }
+      main { height: 100%; overflow: auto; padding: 28px 20px 110px; }
+      .hero, .progress, .card {
+        border: 1px solid rgba(34, 34, 34, 0.1);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+      .hero {
+        min-height: 230px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 26px 20px 18px;
+        background: linear-gradient(145deg, rgba(168, 230, 207, 0.62), rgba(255, 253, 247, 0.92)), #fffdf7;
+      }
+      .eyebrow { margin: 0 0 8px; color: #6bc7a7; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+      h1 { margin: 0 0 10px; max-width: 220px; font-size: 33px; line-height: 1.02; }
+      p { color: #77736a; line-height: 1.55; }
+      .bunny { width: 126px; height: 158px; position: relative; flex: 0 0 auto; }
+      .ear { position: absolute; top: 0; width: 36px; height: 88px; border: 3px solid #222; border-radius: 28px 28px 18px 18px; background: #fff; }
+      .ear.left { left: 28px; transform: rotate(-10deg); }
+      .ear.right { right: 28px; transform: rotate(10deg); }
+      .head { position: absolute; left: 50%; bottom: 0; width: 108px; height: 96px; transform: translateX(-50%); border: 3px solid #222; border-radius: 48% 48% 42% 42%; background: #fff; }
+      .eye { position: absolute; top: 37px; width: 9px; height: 9px; border-radius: 50%; background: #222; }
+      .eye.left { left: 33px; }
+      .eye.right { right: 33px; }
+      .cheek { position: absolute; top: 53px; width: 14px; height: 7px; border-radius: 99px; background: rgba(255, 179, 71, 0.36); }
+      .cheek.left { left: 20px; }
+      .cheek.right { right: 20px; }
+      .mouth { position: absolute; left: 50%; top: 51px; width: 24px; height: 13px; transform: translateX(-50%); border-bottom: 3px solid #222; border-radius: 0 0 99px 99px; }
+      .progress { margin-top: 14px; padding: 16px; }
+      .row, .section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .track { height: 9px; overflow: hidden; margin: 13px 0 10px; border-radius: 99px; background: rgba(34, 34, 34, 0.08); }
+      .track div { width: 54%; height: 100%; border-radius: inherit; background: #6bc7a7; }
+      .primary { width: 100%; min-height: 54px; margin: 16px 0 2px; border: 0; border-radius: 8px; color: #222; background: #a8e6cf; font: inherit; font-weight: 800; }
+      .section { margin-top: 26px; }
+      .section h2 { margin: 0; font-size: 18px; }
+      .section button { border: 0; color: #6bc7a7; background: transparent; font: inherit; font-weight: 800; }
+      .card { overflow: hidden; margin-top: 12px; }
+      .photo { aspect-ratio: 1.28; display: flex; align-items: flex-end; gap: 8px; padding: 12px; background: linear-gradient(135deg, rgba(168, 230, 207, 0.96), rgba(255, 253, 247, 0.7)), linear-gradient(160deg, transparent 48%, #6bc7a7 49%); }
+      .pill { display: inline-flex; min-height: 30px; align-items: center; border: 1px solid rgba(34, 34, 34, 0.1); border-radius: 99px; background: rgba(255, 253, 247, 0.86); padding: 0 11px; font-size: 12px; font-weight: 800; }
+      .body { padding: 15px; }
+      .body h3 { margin: 0; font-size: 17px; }
+      .body p { margin: 4px 0 0; }
+      .tabbar { position: absolute; left: 14px; right: 14px; bottom: 14px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; height: 72px; padding: 8px; border: 1px solid rgba(34, 34, 34, 0.1); border-radius: 18px; background: rgba(255, 255, 255, 0.88); box-shadow: 0 12px 36px rgba(66, 62, 48, 0.12); }
+      .tabbar span { display: grid; place-items: center; align-content: center; gap: 3px; min-width: 0; border-radius: 12px; color: #77736a; font-size: 11px; font-weight: 800; }
+      .tabbar .active { color: #222; background: rgba(168, 230, 207, 0.5); }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">RunnyBunny</p>
+            <h1>오늘도 조금 뛰어볼까?</h1>
+            <p>Happy Bunny가 조용히 기다리는 중</p>
+          </div>
+          <div class="bunny"><div class="ear left"></div><div class="ear right"></div><div class="head"><span class="eye left"></span><span class="eye right"></span><span class="cheek left"></span><span class="cheek right"></span><span class="mouth"></span></div></div>
+        </section>
+        <section class="progress"><div class="row"><strong>Runner Bunny</strong><span>184.6km</span></div><div class="track"><div></div></div><p>다음 등급까지 115.4km 남았어요.</p></section>
+        <button class="primary">오늘의 기억 남기기</button>
+        <section class="section"><div class="section-head"><h2>친구들의 최신 러닝</h2><button>모두 보기</button></div><article class="card"><div class="photo"><span class="pill">5.4km</span><span class="pill">32:18</span></div><div class="body"><div class="row"><h3>Mina</h3><span style="color:#77736a;font-size:13px">14분 전</span></div><p>한강 잠원</p><p>바람이 좋아서 조금 더 뛰었다.</p></div></article></section>
+      </main>
+      <nav class="tabbar"><span class="active">⌂<br />Home</span><span>+<br />Record</span><span>◐<br />Feed</span><span>◇<br />Memory</span><span>♡<br />Bunny</span></nav>
+    </div>
+  </body>
+</html>
